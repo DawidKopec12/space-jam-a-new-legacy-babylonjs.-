@@ -10,6 +10,7 @@ import {
   PhotoDome,
   PhysicsImpostor
 } from "babylonjs";
+import {Environment} from "./environment"
 import * as cannon from "cannon";
 import { WoodProceduralTexture } from "babylonjs-procedural-textures";
 
@@ -50,7 +51,8 @@ var createScene = async function () {
   scene.enablePhysics(new Vector3(0, -3, 0), cannonPlugin);
 
   // Create the default environment
-  const env = scene.createDefaultEnvironment();
+  const environment = new Environment(scene, engine);
+  environment.init();
 
   // Create a floor in the scene and position it to the center
   var gymFloor = MeshBuilder.CreateGround("ground", { width: 60, height: 60 }, scene);
@@ -87,6 +89,8 @@ var createScene = async function () {
   const xr = await scene.createDefaultXRExperienceAsync({
     floorMeshes: [gymFloor],
   });
+
+  
 
   // Return the completed scene with camera, lights, an environment, and a Mixed Reality experience
   return scene;
